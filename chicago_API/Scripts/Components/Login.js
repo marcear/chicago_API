@@ -11,6 +11,9 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 //Models
 import User from '../Models/User';
 import UserService from '../Services/UserService';
+//Validator
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator } from 'react-material-ui-form-validator';
 
 export default class Login extends Component {
     constructor(props) {
@@ -39,43 +42,59 @@ export default class Login extends Component {
     }
 
     handleSubmit(e) {
-        debugger;
         let user = this.state.user;
-        UserService.getUser(user);
+        UserService.getUser(user)
+            .done((response) => {
+                console.log(response);
+            })
+            .fail((error) => {
+                console.log(error)
+            });
+
         e.preventDefault();
     }
 
     render() {
         return (
-            <Grid fluid>
-                <Row center="xs">
-                    <Col xs={3}>
-                        <Card>
-                            <form onSubmit={this.handleSubmit} style={{ marginTop: 200 }}>
+            <ValidatorForm onSubmit={this.handleSubmit} style={{ marginTop: 200 }}>
+                <Grid fluid>
+                    <Row center="xs">
+                        <Col xs={3}>
+                            <Card>
                                 <Row center="xs">
-                                    <TextField
+                                    <TextValidator
+                                        floatingLabelText="Usuario"
                                         hintText="Usuario"
+                                        name="usuario"
                                         onChange={this.handleUsernameChange}
-                                    />
+                                        validators={['required']}
+                                        value={this.state.user.name}
+                                        errorMessages={['Este campo es requerido']} />
                                 </Row>
                                 <Row center="xs">
-                                    <TextField
+                                    <TextValidator
+                                        floatingLabelText="Contraseña"
                                         hintText="Contraseña"
+                                        name="contraseña"
                                         type="password"
                                         onChange={this.handlePasswordChange}
-                                    />
+                                        validators={['required']}
+                                        value={this.state.user.password}
+                                        errorMessages={['Este campo es requerido']} />
                                 </Row>
                                 <Row center="xs">
                                     <RaisedButton
                                         type="submit"
                                         label="Ingresar"
-                                        onClick={this.handleSubmit} />
+                                        onClick={this.handleSubmit}
+                                        primary={true}
+                                        style={{ margin: 10 }} />
                                 </Row>
-                            </form>
-                        </Card>
-                    </Col>
-                </Row>
-            </Grid>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Grid>
+            </ValidatorForm>
         );
     }
 }
