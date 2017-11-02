@@ -35769,7 +35769,8 @@ var Login = function (_Component) {
                 id: 1,
                 name: "",
                 password: ""
-            }
+            },
+            hasErrors: false
 
         };
 
@@ -35794,21 +35795,29 @@ var Login = function (_Component) {
     }, {
         key: 'handleSubmit',
         value: function handleSubmit(e) {
-            var user = this.state.user;
-            __WEBPACK_IMPORTED_MODULE_7__Services_UserService__["a" /* default */].getUser(user).done(function (response) {
-                console.log(response);
-            }).fail(function (error) {
-                console.log(error);
-            });
+            var _state = this.state,
+                user = _state.user,
+                hasErrors = _state.hasErrors;
 
-            e.preventDefault();
+            debugger;
+            if (user.name != '' && user.password != '') {
+                __WEBPACK_IMPORTED_MODULE_7__Services_UserService__["a" /* default */].getUser(user).done(function (response) {
+                    console.log(response);
+                }).fail(function (error) {
+                    console.log(error);
+                });
+            }
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_8_react_form_validator_core__["ValidatorForm"],
-                { onSubmit: this.handleSubmit, style: { marginTop: 200 } },
+                { onSubmit: this.handleSubmit, ref: 'form', style: { marginTop: 200 }, onError: function onError(errors) {
+                        return errors > 0 ? _this2.setState({ hasErrors: true }) : null;
+                    } },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_5_react_flexbox_grid__["Grid"],
                     { fluid: true },
@@ -35854,7 +35863,7 @@ var Login = function (_Component) {
                                         label: 'Ingresar',
                                         onClick: this.handleSubmit,
                                         primary: true,
-                                        style: { margin: 10 } })
+                                        style: { margin: 20 } })
                                 )
                             )
                         )
@@ -39466,7 +39475,7 @@ var UserService = function () {
     _createClass(UserService, null, [{
         key: 'getUser',
         value: function getUser(user) {
-            return __WEBPACK_IMPORTED_MODULE_0__RequestService__["a" /* default */].DoRequest('POST', __WEBPACK_IMPORTED_MODULE_1__Config_Config__["a" /* default */].getBaseUrl() + 'User/GetUser', JSON.stringify({ user: user }));
+            return __WEBPACK_IMPORTED_MODULE_0__RequestService__["a" /* default */].DoRequest('POST', __WEBPACK_IMPORTED_MODULE_1__Config_Config__["a" /* default */].getBaseUrl() + 'User/GetUser', JSON.stringify(user));
         }
     }]);
 

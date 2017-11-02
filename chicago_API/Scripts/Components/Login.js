@@ -23,7 +23,8 @@ export default class Login extends Component {
                 id: 1,
                 name: "",
                 password: ""
-            }
+            },
+            hasErrors: false
 
         }
 
@@ -42,21 +43,22 @@ export default class Login extends Component {
     }
 
     handleSubmit(e) {
-        let user = this.state.user;
-        UserService.getUser(user)
-            .done((response) => {
-                console.log(response);
-            })
-            .fail((error) => {
-                console.log(error)
-            });
-
-        e.preventDefault();
+        const { user, hasErrors } = this.state;
+        debugger;
+        if (user.name != '' && user.password != '') {
+            UserService.getUser(user)
+                .done((response) => {
+                    console.log(response);
+                })
+                .fail((error) => {
+                    console.log(error)
+                });
+        }
     }
 
     render() {
         return (
-            <ValidatorForm onSubmit={this.handleSubmit} style={{ marginTop: 200 }}>
+            <ValidatorForm onSubmit={this.handleSubmit} ref="form" style={{ marginTop: 200 }} onError={errors => errors > 0 ? this.setState({ hasErrors: true }) : null}>
                 <Grid fluid>
                     <Row center="xs">
                         <Col xs={3}>
@@ -88,7 +90,7 @@ export default class Login extends Component {
                                         label="Ingresar"
                                         onClick={this.handleSubmit}
                                         primary={true}
-                                        style={{ margin: 10 }} />
+                                        style={{ margin: 20 }} />
                                 </Row>
                             </Card>
                         </Col>
