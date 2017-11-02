@@ -8,13 +8,20 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Card from 'material-ui/Card';
 //FlexBox Grid
 import { Grid, Row, Col } from 'react-flexbox-grid';
+//Models
+import User from '../Models/User';
+import UserService from '../Services/UserService';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: "",
-            password: ""
+            user: {
+                id: 1,
+                name: "",
+                password: ""
+            }
+
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,19 +29,19 @@ export default class Login extends Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
     handleUsernameChange(e) {
-        this.setState({ userName: e.target.value });
+        let user = Object.assign(User.getDefaultUser(), this.state.user, { name: e.target.value });
+        this.setState({ user });
     }
 
     handlePasswordChange(e) {
-        this.setState({ password: e.target.value });
+        let user = Object.assign(User.getDefaultUser(), this.state.user, { password: e.target.value });
+        this.setState({ user });
     }
 
     handleSubmit(e) {
-        if (this.state.userName == "pedro") {
-            console.log("ok")
-        } else {
-            console.log("mal")
-        }
+        debugger;
+        let user = this.state.user;
+        UserService.getUser(user);
         e.preventDefault();
     }
 

@@ -9,6 +9,8 @@
   "author": "marias",
   "license": "ISC",
   "dependencies": {
+    "jquery": "^3.2.1",
+    "material-ui": "^0.19.4",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-flexbox-grid": "^2.0.0"

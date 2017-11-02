@@ -213,6 +213,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\Components\Login.js" />
+    <Content Include="Scripts\Models\User.js" />
     <Content Include="webpack.config.js" />
     <Content Include="package.json" />
     <Content Include="Webpack_Bundle\main.bundle.js" />
