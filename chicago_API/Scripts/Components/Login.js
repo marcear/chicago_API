@@ -15,6 +15,8 @@ import UserService from '../Services/UserService';
 //Validator
 import { ValidatorForm } from 'react-form-validator-core';
 import { TextValidator } from 'react-material-ui-form-validator';
+//React router
+import { Redirect, withRouter } from 'react-router';
 
 export default class Login extends Component {
     constructor(props) {
@@ -25,9 +27,8 @@ export default class Login extends Component {
                 name: "",
                 password: ""
             },
-            hasErrors: false,
-            disabled: true,
-            loading: false
+            loading: false,
+            isValid: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,26 +46,32 @@ export default class Login extends Component {
     }
 
     handleSubmit(e) {
-
-        const { user, hasErrors } = this.state;
-
+        console.log(this.props.history);
+        const { user } = this.state;
         if (user.name != '' && user.password != '') {
             this.setState({ loading: true });
             setTimeout(() => {
                 UserService.getUser(user)
                     .done((response) => {
-                        this.setState({ loading: false });
+                        this.setState({ loading: false, isValid: true }, this.props.setLogged(true));
                         console.log(response);
                     })
                     .fail((error) => {
                         console.log(error)
                     });
             }, 1500);
-
         }
     }
 
     render() {
+        //Una vez logeado el usuario, voy a la ruta del dashboard
+        const { from } = { from: { pathname: '/' } }
+        if (this.state.isValid) {
+            return (
+                <Redirect to={from} />)
+        }
+
+        //Muestro el loader dependiendo del state
         if (this.state.loading) {
             return (
                 <Grid fluid>

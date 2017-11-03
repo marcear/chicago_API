@@ -13,25 +13,41 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 //Componentes
 import Login from '../Components/Login';
+import Home from '../Components/Home';
+//React router
+//React router
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            value: 3,
-        };
-
-        this.handleChange = this.handleChange.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
+        this.isUserValid = false;
     }
 
-    handleChange(event, index, value) {
-        this.setState({ value: value });
+    handleLogin(valid) {
+        debugger;
+        this.isUserValid = valid;
+    }
+
+    requireAuth(nextState, replace) {
+        debugger;
+        if (!this.isUserValid) {
+            replace({
+                pathname: '/login'
+            })
+        }
     }
 
     render() {
         return (
-            <Login />
+            <Router>
+                <Switch>
+                    <Route path='/login' component={Login} />
+                    <Route path='/' render={() => (this.isUserValid) ? (<Home />) : (<Login setLogged={this.handleLogin} />)} />
+                </Switch>
+            </Router>
         );
     }
 }

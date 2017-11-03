@@ -214,6 +214,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\Components\Home.js" />
     <Content Include="Scripts\Components\Login.js" />
     <Content Include="Scripts\Config\Config.js" />
     <Content Include="Scripts\Models\User.js" />
