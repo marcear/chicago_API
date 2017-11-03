@@ -6,6 +6,7 @@ import { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Card from 'material-ui/Card';
+import CircularProgress from 'material-ui/CircularProgress';
 //FlexBox Grid
 import { Grid, Row, Col } from 'react-flexbox-grid';
 //Models
@@ -24,8 +25,9 @@ export default class Login extends Component {
                 name: "",
                 password: ""
             },
-            hasErrors: false
-
+            hasErrors: false,
+            disabled: true,
+            loading: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,22 +45,42 @@ export default class Login extends Component {
     }
 
     handleSubmit(e) {
+
         const { user, hasErrors } = this.state;
-        debugger;
+
         if (user.name != '' && user.password != '') {
-            UserService.getUser(user)
-                .done((response) => {
-                    console.log(response);
-                })
-                .fail((error) => {
-                    console.log(error)
-                });
+            this.setState({ loading: true });
+            setTimeout(() => {
+                UserService.getUser(user)
+                    .done((response) => {
+                        this.setState({ loading: false });
+                        console.log(response);
+                    })
+                    .fail((error) => {
+                        console.log(error)
+                    });
+            }, 1500);
+
         }
     }
 
     render() {
+        if (this.state.loading) {
+            return (
+                <Grid fluid>
+                    <Row center="xs">
+                        <div style={{ marginTop: 200 }}>
+                            <CircularProgress size={80} thickness={5} />
+                        </div>
+                    </Row>
+                </Grid>);
+        }
         return (
-            <ValidatorForm onSubmit={this.handleSubmit} ref="form" style={{ marginTop: 200 }} onError={errors => errors > 0 ? this.setState({ hasErrors: true }) : null}>
+            <ValidatorForm
+                onSubmit={this.handleSubmit}
+                ref="form" style={{ marginTop: 200 }}
+                onError={errors => errors > 0 ? this.setState({ hasErrors: true }) : null}
+            >
                 <Grid fluid>
                     <Row center="xs">
                         <Col xs={3}>
@@ -67,17 +89,18 @@ export default class Login extends Component {
                                     <TextValidator
                                         floatingLabelText="Usuario"
                                         hintText="Usuario"
-                                        name="usuario"
+                                        name="userName"
                                         onChange={this.handleUsernameChange}
                                         validators={['required']}
                                         value={this.state.user.name}
-                                        errorMessages={['Este campo es requerido']} />
+                                        errorMessages={['Este campo es requerido']}
+                                    />
                                 </Row>
                                 <Row center="xs">
                                     <TextValidator
                                         floatingLabelText="Contraseña"
                                         hintText="Contraseña"
-                                        name="contraseña"
+                                        name="password"
                                         type="password"
                                         onChange={this.handlePasswordChange}
                                         validators={['required']}
@@ -88,9 +111,8 @@ export default class Login extends Component {
                                     <RaisedButton
                                         type="submit"
                                         label="Ingresar"
-                                        onClick={this.handleSubmit}
                                         primary={true}
-                                        style={{ margin: 20 }} />
+                                        style={{ margin: 20, width: '80%' }} />
                                 </Row>
                             </Card>
                         </Col>

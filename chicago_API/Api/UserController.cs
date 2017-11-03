@@ -25,7 +25,7 @@ namespace chicago_API.Api
             }
             //Aca iria la validacion del usuario admin en la base
             var us = new User { Name = user.Name, Password = user.Password };
-            return Ok("desde backend" + us);
+            return Ok("desde backend " + us.Name);
         }
     }
 }
