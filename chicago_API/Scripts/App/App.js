@@ -27,7 +27,6 @@ export default class App extends React.Component {
     }
 
     handleLogin(valid) {
-        debugger;
         this.isUserValid = valid;
     }
 
@@ -39,13 +38,12 @@ export default class App extends React.Component {
             })
         }
     }
-
     render() {
         return (
             <Router>
                 <Switch>
-                    <Route path='/login' component={Login} />
-                    <Route path='/' render={() => (this.isUserValid) ? (<Home />) : (<Login setLogged={this.handleLogin} />)} />
+                    <Route exact path='/' render={() => (this.isUserValid) ? (<Home />) : (<Redirect to={{ pathname: '/login', state: { from: '/' } }} />)} />
+                    <Route exact path='/login' render={() => <Login />} />
                 </Switch>
             </Router>
         );

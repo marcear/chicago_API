@@ -16,7 +16,7 @@ import UserService from '../Services/UserService';
 import { ValidatorForm } from 'react-form-validator-core';
 import { TextValidator } from 'react-material-ui-form-validator';
 //React router
-import { Redirect, withRouter } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 export default class Login extends Component {
     constructor(props) {
@@ -46,14 +46,13 @@ export default class Login extends Component {
     }
 
     handleSubmit(e) {
-        console.log(this.props.history);
         const { user } = this.state;
         if (user.name != '' && user.password != '') {
             this.setState({ loading: true });
             setTimeout(() => {
                 UserService.getUser(user)
                     .done((response) => {
-                        this.setState({ loading: false, isValid: true }, this.props.setLogged(true));
+                        this.setState({ loading: false, isValid: true });
                         console.log(response);
                     })
                     .fail((error) => {
@@ -64,6 +63,7 @@ export default class Login extends Component {
     }
 
     render() {
+        debugger;
         //Una vez logeado el usuario, voy a la ruta del dashboard
         const { from } = { from: { pathname: '/' } }
         if (this.state.isValid) {
@@ -77,7 +77,7 @@ export default class Login extends Component {
                 <Grid fluid>
                     <Row center="xs">
                         <div style={{ marginTop: 200 }}>
-                            <CircularProgress size={80} thickness={5} />
+                            <CircularProgress size={50} thickness={5} />
                         </div>
                     </Row>
                 </Grid>);
@@ -101,7 +101,7 @@ export default class Login extends Component {
                                         validators={['required']}
                                         value={this.state.user.name}
                                         errorMessages={['Este campo es requerido']}
-                                    />
+                                        autoComplete="off" />
                                 </Row>
                                 <Row center="xs">
                                     <TextValidator
@@ -112,7 +112,8 @@ export default class Login extends Component {
                                         onChange={this.handlePasswordChange}
                                         validators={['required']}
                                         value={this.state.user.password}
-                                        errorMessages={['Este campo es requerido']} />
+                                        errorMessages={['Este campo es requerido']}
+                                        autoComplete="off" />
                                 </Row>
                                 <Row center="xs">
                                     <RaisedButton
