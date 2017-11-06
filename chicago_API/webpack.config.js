@@ -5,7 +5,8 @@ module.exports = {
     entry: './main.js',
     output: {
         path: path.join(__dirname, 'Webpack_Bundle'),
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.js',
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -27,6 +28,5 @@ module.exports = {
                 include: /flexboxgrid/
             },
         ]
-    },
-
+    }
 };

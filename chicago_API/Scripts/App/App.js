@@ -42,8 +42,10 @@ export default class App extends React.Component {
         return (
             <Router>
                 <Switch>
-                    <Route exact path='/' render={() => (this.isUserValid) ? (<Home />) : (<Redirect to={{ pathname: '/login', state: { from: '/' } }} />)} />
-                    <Route exact path='/login' render={() => <Login />} />
+                    <div>
+                        <Route exact path='/' render={() => (this.isUserValid) ? (<Home />) : (<Redirect to={{ pathname: '/login', state: { from: '/' } }} />)} />
+                        <Route path='/login' render={() => <Login />} exact />
+                    </div>
                 </Switch>
             </Router>
         );
