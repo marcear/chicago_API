@@ -25,7 +25,6 @@ export default class ListItemMenu extends Component {
     }
 
     getIcon(name) {
-        debugger;
         switch (name) {
             case "Home":
                 return <Home color={style.homeColor} />

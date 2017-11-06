@@ -68210,7 +68210,6 @@ var ListItemMenu = function (_Component) {
     }, {
         key: 'getIcon',
         value: function getIcon(name) {
-            debugger;
             switch (name) {
                 case "Home":
                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_material_ui_svg_icons_action_home___default.a, { color: style.homeColor });
