@@ -1,12 +1,8 @@
-﻿import React, { Component} from 'react';
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
-import FontIcon from 'material-ui/FontIcon';
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
-import MenuItem from 'material-ui/MenuItem';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import RaisedButton from 'material-ui/RaisedButton';
+﻿import React, { Component } from 'react';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+
+//Componentes
+import SideBar from '../Components/SideBar';
 
 export default class Home extends Component {
 
@@ -15,11 +11,14 @@ export default class Home extends Component {
     }
 
     render() {
-        return (<div>Home</div>
-          //Agregar estos compoenentes
-          //SideBar
-          //ToolBar
-          //Footer
+        return (
+            <div>
+                {this.props.comp}<SideBar />
+            </div>
+            //Agregar estos componentes
+            //SideBar
+            //ToolBar
+            //Footer
         );
     }
 }

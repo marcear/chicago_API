@@ -14,7 +14,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-
 //Componentes
 import Login from '../Components/Login';
 import Home from '../Components/Home';
-//React router
+import UserService from '../Services/UserService';
 //React router
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
@@ -30,21 +30,14 @@ export default class App extends React.Component {
         this.isUserValid = valid;
     }
 
-    requireAuth(nextState, replace) {
-        debugger;
-        if (!this.isUserValid) {
-            replace({
-                pathname: '/login'
-            })
-        }
-    }
     render() {
         return (
             <Router>
                 <Switch>
                     <div>
-                        <Route exact path='/' render={() => (this.isUserValid) ? (<Home />) : (<Redirect to={{ pathname: '/login', state: { from: '/' } }} />)} />
-                        <Route path='/login' render={() => <Login />} exact />
+                        <Route exact path='/' render={() => (UserService.isUserValid()) ? ((<Redirect to={{ pathname: '/home', state: { from: '/' } }} />)) : (<Redirect to={{ pathname: '/login', state: { from: '/' } }} />)} />
+                        <Route path='/home' render={() => <Home />} />
+                        <Route path='/login' render={() => <Login />} />
                     </div>
                 </Switch>
             </Router>

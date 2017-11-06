@@ -1,7 +1,5 @@
 ﻿//React
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Component } from 'react';
+import React, { Component } from 'react';
 //Material UI
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -63,7 +61,6 @@ export default class Login extends Component {
     }
 
     render() {
-        debugger;
         //Una vez logeado el usuario, voy a la ruta del dashboard
         const { from } = { from: { pathname: '/' } }
         if (this.state.isValid) {

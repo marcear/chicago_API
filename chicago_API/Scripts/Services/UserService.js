@@ -6,4 +6,9 @@ export default class UserService {
         return RequestService.DoRequest('POST', Config.getBaseUrl() + 'User/GetUser', JSON.stringify(user));
     }
 
+    static isUserValid() {
+        //Implementar logica para determinar si el usuario es valido--> es admin
+        return true;
+    }
+
 }
