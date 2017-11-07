@@ -16,7 +16,8 @@ import Login from '../Components/Login';
 import Home from '../Components/Home';
 import UserService from '../Services/UserService';
 //React router
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+
 
 export default class App extends React.Component {
 
@@ -32,15 +33,12 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <Router>
-                <Switch>
-                    <div>
-                        <Route exact path='/' render={() => (UserService.isUserValid()) ? ((<Redirect to={{ pathname: '/home', state: { from: '/' } }} />)) : (<Redirect to={{ pathname: '/login', state: { from: '/' } }} />)} />
-                        <Route path='/home' render={() => <Home />} />
-                        <Route path='/login' render={() => <Login />} />
-                    </div>
-                </Switch>
-            </Router>
+            <Switch>
+                <div>
+                    <Route path='/' exact render={() => (UserService.isUserValid()) ? (<Home />) : (<Redirect to="/login" />)} />
+                    <Route path='/login' render={() => <Login />} />
+                </div>
+            </Switch>
         );
     }
 }

@@ -6,22 +6,26 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import Home from 'material-ui/svg-icons/action/home';
 import Event from 'material-ui/svg-icons/action/event';
-import Otro from 'material-ui/svg-icons/navigation/check';
 import { cyan800 } from 'material-ui/styles/colors';
+
+import { Link, Route } from 'react-router-dom';
 
 const style = {
     homeColor: cyan800
 }
 
-export default class ListItemMenu extends Component {
+export default class SideBarItemMenu extends Component {
     constructor(props) {
         super(props);
         this.getMenuItems = this.getMenuItems.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this);
+        this.setRoutes = this.setRoutes.bind(this);
         this.items = [];
     }
 
     componentWillMount() {
         this.getMenuItems();
+        this.setRoutes();
     }
 
     getIcon(name) {
@@ -33,18 +37,35 @@ export default class ListItemMenu extends Component {
                 return <Event color={style.homeColor} />
                 break;
             default:
-                return <Otro />
+                return null;
         }
     }
 
+    handleItemClick(item) {
+        this.props.handleItemClick(item);
+    }
+
+    setRoutes() {
+        const { routes } = this.props;
+        routes.map((route, index) => (
+            <Route
+                key={index}
+                path={route.route}
+                component={route.sidebar}
+            />
+        ));
+    }
+
     getMenuItems() {
-        console.log("getmenuitems");
-        console.log(items)
-        const { items } = this.props;
-        console.log(items)
-        return items.map((item, i) => {
-            this.items.push(<MenuItem key={i} primaryText={item.name} leftIcon={this.getIcon(item.name)} value={item} />)
-        })
+        const { routes } = this.props;
+        return routes.map((item, i) => {
+            this.items.push(
+                <MenuItem key={i}
+                    primaryText={item.name}
+                    leftIcon={this.getIcon(item.name)}
+                    value={item}
+                    containerElement={<Link to={item.route} />} />)
+        });
     }
 
     render() {

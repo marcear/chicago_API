@@ -6,33 +6,31 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import IconButton from 'material-ui/IconButton';
-import ListItemMenu from '../Components/ListItemMenu';
+import SideBarItemMenu from '../Components/SideBarItemMenu';
+//React Router
+import { Redirect } from 'react-router-dom';
+import Home from '../Components/Home';
+import Events from '../Components/Events';
 
 export default class SideBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false,
+            redirectTo: null,
+            isRedirecting: false
         }
-        this.handleToggle = this.handleToggle.bind(this);
-    }
-
-    handleToggle() {
-        this.setState({ open: !this.state.open });
     }
 
     render() {
-        const items = [{ name: "Home"}, { name: "Eventos" }]
+        const routes = [{ name: "Home", route: "/", sidebar: () => <Home/> }, { name: "Eventos", route: "/events", sidebar: () => <Events/> }]
+
         return (
             <div>
-                <IconButton
-                    onClick={this.handleToggle}
-                >
-                    <Menu />
-                </IconButton>
-
-                <Drawer open={this.state.open} openSecondary={true}>
-                    <ListItemMenu items={items} />
+                <Menu />
+                <Drawer open={this.state.open} docked={true} open={true}>
+                    <AppBar title="Chicago" showMenuIconButton={false} />
+                    <SideBarItemMenu routes={routes} handleItemClick={this.handleItemClick} />
                 </Drawer>
             </div>
         );
