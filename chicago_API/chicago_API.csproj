@@ -191,7 +191,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\App\App.js" />
-    <Content Include="Scripts\App\main.js" />
+    <Content Include="Scripts\App\Main.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
@@ -214,8 +214,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\Components\Events.js" />
     <Content Include="Scripts\Components\Home.js" />
-    <Content Include="Scripts\Components\ListItemMenu.js" />
+    <Content Include="Scripts\Components\SideBarItemMenu.js" />
     <Content Include="Scripts\Components\Login.js" />
     <Content Include="Scripts\Components\SideBar.js" />
     <Content Include="Scripts\Config\Config.js" />

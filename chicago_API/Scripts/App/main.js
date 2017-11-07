@@ -6,13 +6,18 @@ import App from './App';
 //Theme
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 //React Router
-import {BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
 const MainApp = () => (
     <Router>
-        <MuiThemeProvider>
-            <App />
-        </MuiThemeProvider>
+        <div>
+            <MuiThemeProvider>
+                <Grid fluid>
+                    <App />
+                </Grid>
+            </MuiThemeProvider>
+        </div>
     </Router>
 );
 
